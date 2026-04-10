@@ -13,6 +13,13 @@ const PhoneBook = () => {
     contactService.getAll().then(returnedContacts => setPersons(returnedContacts));
   }, []);
 
+  const handleConactDelete = (person) => {
+    if (window.confirm(`Delete ${person.name} ?`)) {
+      contactService.deleteContact(person.id)
+      .then(() => setPersons(persons.filter(currentPerson => !(currentPerson.id === person.id))))
+    }
+  };
+
   const [filter, setFilter] = useState("");
   const filteredPersons =
     filter === ""
@@ -29,7 +36,7 @@ const PhoneBook = () => {
 
       <h2>Numbers</h2>
       {filteredPersons.map((person) => (
-        <Person key={person.id} person={person} />
+        <Person key={person.id} person={person} handleDelete={handleConactDelete}/>
       ))}
     </div>
   );

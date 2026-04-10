@@ -1,9 +1,10 @@
-const Person = ({ person }) => {
+const Person = ({ person, handleDelete }) => {
   return (
-    <p>
-      {person.name}: {person.number}
-    </p>
+    <div>
+      {person.name}: {person.number}{" "}
+      <button onClick={() => handleDelete(person)}>Delete</button>
+    </div>
   );
 };
 
-export default Person
+export default Person;
