@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import contactService from "../services/contacts";
 
 const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
@@ -21,9 +21,12 @@ const PersonForm = ({ persons, setPersons }) => {
       alert(`${newName} is already added to phonebook`);
       return;
     }
-    setPersons(persons.concat(personObject));
-    setNewName("");
-    setNewNumber("");
+
+    contactService.createContact(personObject).then((newPerson) => {
+      setPersons(persons.concat(newPerson));
+      setNewName("");
+      setNewNumber("");
+    });
   };
 
   const handleNameChange = (event) => {
@@ -50,4 +53,4 @@ const PersonForm = ({ persons, setPersons }) => {
   );
 };
 
-export default PersonForm
+export default PersonForm;

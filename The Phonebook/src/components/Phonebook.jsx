@@ -1,29 +1,25 @@
 import { useState, useEffect } from "react";
-import axios from 'axios'
 import Filter from "./Filter";
-import PersonForm from './PersonForm'
-import Person from './Person'
+import PersonForm from "./PersonForm";
+import Person from "./Person";
+import contactService from "../services/contacts";
 
 const PhoneBook = () => {
-
-  
-
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    console.log('fetching persons from the json-server');
-    
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
-  }, [])
+    console.log("fetching persons from the json-server");
 
-  const [filter, setFilter] = useState('')
-  const filteredPersons = filter === ''
-    ? persons
-    : persons.filter(p => p.name.toLowerCase().includes(filter.toLowerCase())) 
+    contactService.getAll().then(returnedContacts => setPersons(returnedContacts));
+  }, []);
+
+  const [filter, setFilter] = useState("");
+  const filteredPersons =
+    filter === ""
+      ? persons
+      : persons.filter((p) =>
+          p.name.toLowerCase().includes(filter.toLowerCase()),
+        );
 
   return (
     <div>
@@ -32,10 +28,11 @@ const PhoneBook = () => {
       <PersonForm persons={persons} setPersons={setPersons} />
 
       <h2>Numbers</h2>
-      {filteredPersons.map(person => <Person key={person.id} person={person}/>)}
+      {filteredPersons.map((person) => (
+        <Person key={person.id} person={person} />
+      ))}
     </div>
   );
 };
 
-
-export default PhoneBook
+export default PhoneBook;
