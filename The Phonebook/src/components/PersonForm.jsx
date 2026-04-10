@@ -5,28 +5,36 @@ const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
+  const compareNames = (name1, name2) => {
+    return name1.toLowerCase() === name2.toLowerCase()
+  }
+
   const addNewPerson = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
 
-    if (
-      persons.some(
-        (person) => person.name.toLowerCase() === newName.toLowerCase(),
-      )
-    ) {
-      alert(`${newName} is already added to phonebook`);
-      return;
-    }
-
-    contactService.createContact(personObject).then((newPerson) => {
+    const oldPerson = persons.find(
+      (person) => compareNames(person.name, newName)
+    );
+    if (oldPerson !== undefined) {
+      if (
+        window.confirm(
+          `"${newName}" already exists, replace the new phone number?`,
+        )
+      ) {
+        contactService.updatePhoneNumber(oldPerson.id, personObject)
+        .then(() => contactService.getAll().then(contacts => setPersons(contacts)))
+      }
+    } else {
+      contactService.createContact(personObject).then((newPerson) => {
       setPersons(persons.concat(newPerson));
       setNewName("");
       setNewNumber("");
     });
+    }
   };
 
   const handleNameChange = (event) => {

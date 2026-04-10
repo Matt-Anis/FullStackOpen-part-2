@@ -13,7 +13,7 @@ const PhoneBook = () => {
     contactService.getAll().then(returnedContacts => setPersons(returnedContacts));
   }, []);
 
-  const handleConactDelete = (person) => {
+  const handleContactDelete = (person) => {
     if (window.confirm(`Delete ${person.name} ?`)) {
       contactService.deleteContact(person.id)
       .then(() => setPersons(persons.filter(currentPerson => !(currentPerson.id === person.id))))
@@ -36,7 +36,7 @@ const PhoneBook = () => {
 
       <h2>Numbers</h2>
       {filteredPersons.map((person) => (
-        <Person key={person.id} person={person} handleDelete={handleConactDelete}/>
+        <Person key={person.id} person={person} handleDelete={handleContactDelete}/>
       ))}
     </div>
   );
