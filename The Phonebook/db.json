@@ -9,6 +9,16 @@
       "name": "test here",
       "number": "000",
       "id": "fBXbodG9FUw"
+    },
+    {
+      "name": "hello",
+      "number": "",
+      "id": "yoHFWrA3DSY"
+    },
+    {
+      "name": "",
+      "number": "",
+      "id": "jZXMG0ngnKU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

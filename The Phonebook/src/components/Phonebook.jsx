@@ -3,9 +3,11 @@ import Filter from "./Filter";
 import PersonForm from "./PersonForm";
 import Person from "./Person";
 import contactService from "../services/contacts";
+import Notification from "./Notification";
 
 const PhoneBook = () => {
   const [persons, setPersons] = useState([]);
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     console.log("fetching persons from the json-server");
@@ -31,8 +33,9 @@ const PhoneBook = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification}/>
       <Filter filter={filter} setFilter={setFilter} />
-      <PersonForm persons={persons} setPersons={setPersons} />
+      <PersonForm persons={persons} setPersons={setPersons} setNotification={setNotification}/>
 
       <h2>Numbers</h2>
       {filteredPersons.map((person) => (

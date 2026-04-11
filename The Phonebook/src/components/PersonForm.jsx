@@ -1,7 +1,8 @@
 import { useState } from "react";
 import contactService from "../services/contacts";
+import Notification from "./Notification";
 
-const PersonForm = ({ persons, setPersons }) => {
+const PersonForm = ({ persons, setPersons, setNotification}) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -29,6 +30,10 @@ const PersonForm = ({ persons, setPersons }) => {
         .then(() => contactService.getAll().then(contacts => setPersons(contacts)))
       }
     } else {
+      setNotification(`Added ${newName}`)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
       contactService.createContact(personObject).then((newPerson) => {
       setPersons(persons.concat(newPerson));
       setNewName("");
