@@ -2,13 +2,13 @@ import { useState } from "react";
 import contactService from "../services/contacts";
 import Notification from "./Notification";
 
-const PersonForm = ({ persons, setPersons, setNotification}) => {
+const PersonForm = ({ persons, setPersons, setNotification }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
   const compareNames = (name1, name2) => {
-    return name1.toLowerCase() === name2.toLowerCase()
-  }
+    return name1.toLowerCase() === name2.toLowerCase();
+  };
 
   const addNewPerson = (event) => {
     event.preventDefault();
@@ -17,8 +17,8 @@ const PersonForm = ({ persons, setPersons, setNotification}) => {
       number: newNumber,
     };
 
-    const oldPerson = persons.find(
-      (person) => compareNames(person.name, newName)
+    const oldPerson = persons.find((person) =>
+      compareNames(person.name, newName),
     );
     if (oldPerson !== undefined) {
       if (
@@ -26,19 +26,35 @@ const PersonForm = ({ persons, setPersons, setNotification}) => {
           `"${newName}" already exists, replace the new phone number?`,
         )
       ) {
-        contactService.updatePhoneNumber(oldPerson.id, personObject)
-        .then(() => contactService.getAll().then(contacts => setPersons(contacts)))
+        contactService
+          .updatePhoneNumber(oldPerson.id, personObject)
+          .then(() =>
+            contactService.getAll().then((contacts) => setPersons(contacts)),
+          )
+          .catch((error) => {
+            setNotification( {
+              message: `Information of ${oldPerson.name} has already been removed from server`,
+              isError: true
+            });
+            contactService.getAll().then((contacts) => setPersons(contacts))
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+          });
       }
     } else {
-      setNotification(`Added ${newName}`)
+      setNotification({
+        message: `Added ${newName}`,
+        isError: false
+      });
       setTimeout(() => {
-        setNotification(null)
-      }, 5000)
+        setNotification(null);
+      }, 5000);
       contactService.createContact(personObject).then((newPerson) => {
-      setPersons(persons.concat(newPerson));
-      setNewName("");
-      setNewNumber("");
-    });
+        setPersons(persons.concat(newPerson));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 

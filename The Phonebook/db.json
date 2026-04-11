@@ -7,18 +7,13 @@
     },
     {
       "name": "test here",
-      "number": "000",
-      "id": "fBXbodG9FUw"
+      "number": "",
+      "id": "FIhSl0qgtZ0"
     },
     {
-      "name": "hello",
+      "name": "test",
       "number": "",
-      "id": "yoHFWrA3DSY"
-    },
-    {
-      "name": "",
-      "number": "",
-      "id": "jZXMG0ngnKU"
+      "id": "7N3Y1mzIgd0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

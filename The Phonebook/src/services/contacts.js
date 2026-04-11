@@ -8,7 +8,8 @@ const createContact = newContactObject => {
 
 const updatePhoneNumber = (id, newContactObject) => {
     const response = axios.put(`${baseUrl}/${id}`, newContactObject)
-    return response.then(response.data)
+
+    return response.then(response => response.data)
 }
 
 const getAll = () => {
