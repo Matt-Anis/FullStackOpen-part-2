@@ -18,6 +18,12 @@ const DisplayCountry = () => {
   useEffect(() => {
     const filtered = filterCountries.filter(searchTerm, allCountries);
     setFilteredCountries(filtered); // i know there is an alternative fix for this by deriving this but i do not want to use something i don't know yet
+    if (filtered.length === 1) {
+        const country = filtered[0]
+        fetchWetherApi.getWeatherByCity(country.capital).then(weather => setWeather(weather))
+    } else {
+        setWeather(null)
+    }
   }, [searchTerm, allCountries]);
 
   const handleSearchTermChange = (event) => {
@@ -66,6 +72,13 @@ const DisplayCountry = () => {
             />
           </div>
         ))}
+      {weather && (
+        <div>
+          <h2>Weather in {filteredCountries[0]?.capital?.[0]}</h2>
+          <p>Temperature: {weather.current_weather.temperature}°C</p>
+          <p>Wind Speed: {weather.current_weather.wind_speed} km/h</p>
+        </div>
+      )}
     </>
   );
 };
