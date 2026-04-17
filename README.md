@@ -1,3 +1,1 @@
-init repo for FSO part 2 :)
-
-fetched from fedora 
+All exercices of part 2 are here
