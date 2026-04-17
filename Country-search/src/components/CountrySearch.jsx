@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import fetchCountries from "../services/fetchCountries";
 import filterCountries from "../services/filterCountries";
+import fetchWetherApi from "../services/fetchWetherApi";
 
 const DisplayCountry = () => {
   const [allCountries, setAllCountries] = useState([]);
   const [searchTerm, setSearchedTerm] = useState("");
   const [filteredCountries, setFilteredCountries] = useState([]);
+  const [weather, setWeather] = useState(null)
 
   useEffect(() => {
     fetchCountries.getAll().then((countries) => {
