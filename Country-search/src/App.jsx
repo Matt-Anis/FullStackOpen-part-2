@@ -1,10 +1,10 @@
-
+import CountrySearch from "./components/CountrySearch"
 
 function App() {
 
   return (
     <>
-      hello
+      <CountrySearch />
     </>
   )
 }
