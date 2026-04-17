@@ -21,6 +21,11 @@ const DisplayCountry = () => {
   const handleSearchTermChange = (event) => {
     setSearchedTerm(event.target.value);
   };
+
+  const handleClickShowButton = (event) => {
+      setSearchedTerm(event.target.id)
+    };
+
   return (
     <>
       <input
@@ -35,7 +40,10 @@ const DisplayCountry = () => {
       {filteredCountries.length > 1 && filteredCountries.length < 10 && (
         <ul>
           {filteredCountries.map((country) => (
-            <li key={country.name.common}>{country.name.common}</li>
+            <>
+              <li key={country.name.common}>{country.name.common}</li>
+              <button id={country.name.common} onClick={handleClickShowButton}>show</button>
+            </>
           ))}
         </ul>
       )}
@@ -50,7 +58,10 @@ const DisplayCountry = () => {
             {Object.keys(country.languages).map((language) => (
               <p key={language}>{country.languages[language]}</p>
             ))}
-            <img src={country.flags.png} alt={`flag of ${country.name.common}`} />
+            <img
+              src={country.flags.png}
+              alt={`flag of ${country.name.common}`}
+            />
           </div>
         ))}
     </>
